@@ -1,0 +1,35 @@
+{% extends "bookcatalog/layout.html" %}
+
+
+{% block body %}
+<div class="container">
+	<div class="py-4">
+		{% if user.username == username %}
+			<h1>Your reviewed books</h1>
+		{% else %}
+			<h1>Books that <span class="text-primary">{{  username  }}</span> has reviewed</h1>
+		{% endif %}
+	</div>
+	
+	<div class="list-group">
+	  	{% for userReview in userReviews%}
+			<a href="{% url 'book' userReview.book.isbn %}" class="list-group-item list-group-item-action d-flex justify-content-between">
+				<div>{{  userReview.book.title  }}</div>
+				<div>
+					{% for i in "12345" %}
+						{% if forloop.counter <= userReview.rating %}
+							<i class="fas fa-star" style="color: orange;"></i>
+						{% else %}
+							<i class="fas fa-star"></i>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</a> 
+        {% empty %}
+	  		<h3>No book review yet!</h3>
+	  	{% endfor%}
+	</div>
+</div>
+    
+
+{% endblock %}
